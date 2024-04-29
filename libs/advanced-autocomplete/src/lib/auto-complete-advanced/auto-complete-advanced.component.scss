@@ -1,0 +1,25 @@
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  background-color:  white;
+}
+.lists{
+  position: absolute;
+  min-height: 10em;
+  z-index: 1000;
+  left: 0;
+
+}
+.found-item,input,mat-form-field{
+  height: 4vh !important;
+  border: none !important;
+  width: 100% !important;
+}
+
+input{
+  background-color: transparent !important;
+  border-bottom: solid 1px var(--COLOR-BLUEBLACK) !important ;
+  color: var(--COLOR-BLUEBLACK) !important;
+  width: 50% !important;
+}

@@ -1,0 +1,187 @@
+<div class="mobile-display-none light-div bg-danger d-flex flex-nowrap w-100">
+  <div class="text-left text-dark w-50">
+    <span class="text-light"> Crown Plaza </span>
+  </div>
+  <div class="text-right w-50">
+    <span
+      [@animate]="setting.animationFlag"
+      class="link-light text-meduim"
+      (click)="changeLanguage(languages[languageIndex].title)"
+    >
+      {{ 'titles' | translate }}
+    </span>
+  </div>
+</div>
+<div class="w-100 header-fix z-index bg-gold">
+  <div class="d-flex bg-white" [class.fix-position]="setting.scrollDown">
+    <div class="flex-cell w-25 position-static text-center">
+      <div class="d-flex flex-cell w-100 flex-nowrap">
+        <div class="w-50">
+          <span
+            class="font-antique text-logo text-blueblack text-large flex-cell"
+          >
+            CROWN
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center w-75 flex-cell">
+      <div class="d-flex w-100 text-left flex-cell">
+        <!-- SPACE II-->
+        <div class="w-75">
+          <div class="flex-cell text-center w-100 d-flex">
+            <pe-search
+              class="w-100"
+              (resultOutput)="resultOutput($event)"
+            ></pe-search>
+          </div>
+        </div>
+
+        <!-- SPACE III-->
+        <div class="w-25" *ngIf="!userLoginInformation?.id; else elseLogin">
+          <div class="d-flex w-100">
+            <div class="w-100">
+              <div class="child text-right w-100">
+                <span
+                  class="text-meduim link-darks"
+                  [routerLink]="[{ outlets: { secondRouter: 'lazy/login' } }]"
+                >
+                  {{ 'login' | translate }}</span
+                >
+                <span class="text-meduim text-darks">|</span>
+                <span
+                  class="text-meduim link-darks"
+                  [routerLink]="[{ outlets: { secondRouter: 'lazy/signup' } }]"
+                >
+                  {{ 'signup' | translate }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #elseLogin>
+          <div class="w-25">
+            <div class="d-flex w-100">
+              <div class="text-right w-100">
+                <button
+                  (click)="setting.menuShow = !setting.menuShow"
+                  mat-button
+                  class="bg-white text-blueblack"
+                >
+                  <mat-icon>arrow_drop_down</mat-icon>
+                  <span class="fw-bold text-meduim">
+                    {{ 'hello' | translate }}
+                    ! {{ userLoginInformation?.name | titlecase }}</span
+                  >
+                  <span *ngIf="userLoginInformation?.lname" class="m-2">{{
+                    userLoginInformation?.lname
+                  }}</span>
+                </button>
+                <div
+                  class="position-relative d-inline-block menu"
+                  *ngIf="setting.menuShow"
+                >
+                  <div class="position-absolute">
+                    <div class="w-100 relative">
+                      <img
+                        class="profile-icon"
+                        [src]="
+                          'https://burjcrown.com/drm/travel/users/profile/' +
+                          userLoginInformation?.id +
+                          '/1.jpg'
+                        "
+                      />
+                      <div class="text-left fw-semibold banner-bottom p-2">
+                        {{ userLoginInformation?.email | titlecase }}
+                      </div>
+                      <hr />
+                    </div>
+
+                    <p (click)="routeHome()">
+                      <span>
+                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span>
+                        {{ 'home' | translate }}
+                      </span>
+                    </p>
+                    <p (click)="setting.menuShow = false">
+                      <span class="link-gold">
+                        <i class="fa fa-cog fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span
+                        (click)="setting.menuShow = false"
+                        [routerLink]="[
+                          { outlets: { secondRouter: 'lazy/setting' } }
+                        ]"
+                      >
+                        {{ 'settings' | translate }}
+                      </span>
+                    </p>
+                    <p (click)="savedLocations()">
+                      <span>
+                        <i class="fa fa-2x fa-gratipay" aria-hidden="true"></i>
+                      </span>
+                      <span>
+                        {{ 'savelocation' | translate }}
+                      </span>
+                    </p>
+                    <p (click)="sharedLocations()">
+                      <span>
+                        <i class="fa fa-2x fa-share-alt" aria-hidden="true"></i>
+                      </span>
+                      <span>
+                        {{ 'shared' | translate }}
+                      </span>
+                    </p>
+                    <p></p>
+                    <p>
+                      <span> <i class="fa fa-road fa-2x"></i> </span>
+                      <span
+                        class="link-gold"
+                        (click)="showCityDIstanceMapComponent()"
+                      >
+                        {{ 'cityDistance' | translate }}
+                      </span>
+                    </p>
+
+                    <p
+                      class="location-list"
+                      (click)="showLocationsOnMapComponent()"
+                    >
+                      <span>
+                        {{ 'locationList' | translate }}
+                      </span>
+                    </p>
+                    <div class="text-left p-3 fw-bold w-100">
+                      <span class="text-muted"> Language </span>
+
+                      <span
+                        [@animate]="setting.animationFlag"
+                        class="link-dark text-meduim"
+                        (click)="changeLanguage(languages[languageIndex].title)"
+                      >
+                        {{ 'titles' | translate }}
+                      </span>
+                    </div>
+                    <p (click)="logout()">
+                      <span>
+                        <i class="fa fa-2x fa-sign-out" aria-hidden="true"></i>
+                      </span>
+                      <span>
+                        {{ 'logout' | translate }}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="w-100 nav-div shadow">
+  <pe-navbar-menu></pe-navbar-menu>
+</div>

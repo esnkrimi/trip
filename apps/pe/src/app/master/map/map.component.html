@@ -1,0 +1,17 @@
+<div class="relative" *ngIf="setting!">
+  <pe-map
+    (zoomActivator)="zoomActivatorFunction($event)"
+    [center]="setting.center"
+    [savedLocation]="savedLocation"
+    [showTour]="showTour"
+    [city]="setting.city"
+    [typeFromList]="typeFromList"
+    [state]="setting.state"
+    [typeForceChange]="setting.type"
+    [country]="setting.country"
+    [formTripShow]="setting.formTripShow"
+    (formTripShowAction)="formTripShowAction($event)"
+  ></pe-map>
+  <pe-help></pe-help>
+  <pe-places *ngIf="!deviceIsWide" (viewOnMap)="viewOnMap($event)"></pe-places>
+</div>

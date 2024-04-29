@@ -1,0 +1,101 @@
+  textarea{
+    height: 10em;
+  }
+  .img-country{
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .selected-rate{
+    color:var(--COLOR-RED)
+  }
+  .border-0{
+    border: none !important;
+  }
+  .mat-form-field-appearance-legacy:before{
+    outline: none !important;
+    border: solid 1px white !important;
+
+  }
+
+  .mat-form-field-appearance-legacy:after{
+    outline: none !important;
+    border: solid 1px white !important;
+
+  }
+.div-header{
+  background-color: #f1efef;
+  color: rgb(34, 34, 34);
+  padding: 1em;
+}
+.selected{
+  color:red
+}
+.icon-small{
+  width: 15px;
+  height: 15px;
+}
+.panel-exists{
+  padding: 2em !important;
+}
+::ng-deep{
+  .mat-raised-button{
+    background-color: var(--COLOR-GREEN) !important;
+    color:white !important;
+    margin: 0.5em;
+  }
+}
+.text-title{
+}
+.loading{
+  top:50%;
+  left:45%
+}
+.mat-form-field{
+  width: 85% !important;
+}
+input{
+  text-transform: capitalize;
+  width: 50% !important;
+}
+.modals{
+
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.input-file-upload{
+}
+@media (max-width:1200px) {
+  form,.inner{
+    width: 100% !important;
+  }
+
+}
+@media (min-width:1200px) {
+  form{
+    width: 50%;
+  }
+  .d-fixed{
+    width: 50% !important;
+  }
+
+}
+
+.transparent-bg{
+  z-index: 9999999 !important;
+}
+i,mat-icon{
+  font-size: 1.5em !important;
+}
+.d-fixed{
+  z-index: 99999999 !important;
+  width: 100% !important;
+}
+.display-none{
+  display: none !important;
+}
+.img_icon{
+  width: 15vh !important;
+  height: 8vh !important;
+  border-radius: 5%;
+}

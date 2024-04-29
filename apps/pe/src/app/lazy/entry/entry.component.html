@@ -1,0 +1,132 @@
+<div
+  class="w-100 mt-4 p-4 text-center"
+  *ngIf="loginSetting.routeType === 'login'; else esignup"
+>
+  <div
+    class="login-div w-25 d-inline-block bg-white p-4 shadow-sm"
+    *ngIf="!loginSetting.loginSuccess"
+  >
+    <div class="w-100 mt-4 text-center fw-bold">
+      <p></p>
+      <p class="m-3 text-meduim">Log in to Crown</p>
+    </div>
+    <div class="w-100"></div>
+    <form [formGroup]="formLogin" (submit)="onSubmitLogin()" class="m-2">
+      <div class="w-100">
+        <mat-form-field class="w-100">
+          <mat-label> {{ 'email' | translate }}</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+      </div>
+
+      <div class="w-100">
+        <mat-form-field class="w-100">
+          <mat-label> {{ 'password' | translate }}</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-100"
+        [disabled]="!formLogin.valid"
+      >
+        {{ 'login' | translate }}
+      </button>
+    </form>
+    <div *ngIf="loginSetting.loginError">
+      <span class="text-warning text-left">
+        incorrect username or password
+      </span>
+    </div>
+    <div class="m-2">
+      <asl-google-signin-button
+        GoogleSigninButtonDirective
+        type="standard"
+        size="large"
+      >
+      </asl-google-signin-button>
+    </div>
+
+    <div class="w-100 mt-4 text-center">
+      <p class="mb-4 text-meduim">
+        {{ 'createnew' | translate }}
+      </p>
+    </div>
+    <div class="w-100 mt-4 text-center fw-bold text-purple">
+      <p></p>
+      <p class="fw-bold mt-4"></p>
+      <p class="mb-4 cursor-pointer link" [routerLink]="['../signup']">
+        {{ 'signup' | translate }}
+      </p>
+    </div>
+    <div class="text-left p-1 m-2 fw-bold">
+      <!-- 
+      <span class="text-meduim link cursor-pointer" [routerLink]="['../login']">
+       {{ 'forgetPassword' | translate }}</span
+       >
+     -->
+    </div>
+  </div>
+</div>
+<ng-template #esignup>
+  <div class="w-100 p-4 mt-4 text-center">
+    <div class="login-div w-25 p-4 d-inline-block bg-white shadow-sm">
+      <div class="w-100 text-center">
+        <p class="fw-bold">Sign up</p>
+      </div>
+      <form [formGroup]="formSubmit" (submit)="onSubmitSignup()" class="m-2">
+        <div class="w-100">
+          <mat-form-field class="w-100">
+            <mat-label> {{ 'email' | translate }}</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+        </div>
+
+        <div class="w-100">
+          <mat-form-field class="w-100">
+            <mat-label> {{ 'password' | translate }}</mat-label>
+            <input matInput formControlName="password" />
+          </mat-form-field>
+        </div>
+        <div class="w-100">
+          <mat-form-field class="w-100">
+            <mat-label> {{ 'repeatpassword' | translate }}</mat-label>
+            <input matInput formControlName="password2" />
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="w-100"
+          [disabled]="!formSubmit.valid"
+        >
+          {{ 'signup' | translate }}
+        </button>
+      </form>
+      <div *ngIf="loginSetting.errorPasswordEqual" class="text-left">
+        <span class="text-small m-2 cursor-pointer"> Password not match </span>
+      </div>
+
+      <div class="w-100 text-center m-2">
+        <asl-google-signin-button
+          GoogleSigninButtonDirective
+          type="standard"
+          size="large"
+          theme="outline"
+        >
+        </asl-google-signin-button>
+      </div>
+      <div class="text-left pt-3">
+        <span
+          class="text-meduim link cursor-pointer"
+          [routerLink]="['../login']"
+        >
+          Already a member?
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-template>

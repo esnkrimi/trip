@@ -1,0 +1,17 @@
+<div class="parent-div p-2 bg-light">
+  <pe-autocomplete-public
+    (resultSelected)="resultSelected($event)"
+    [data]="users"
+  ></pe-autocomplete-public>
+  <span *ngFor="let guest of users; let index = index">
+    <div>
+      <h3
+        mat-dialog-close
+        matDialogClose
+        class="text-capitalize text-dark cursor-pointer"
+      >
+        {{ guest.name || guest.email }} {{ guest.lnama }}
+      </h3>
+    </div>
+  </span>
+</div>

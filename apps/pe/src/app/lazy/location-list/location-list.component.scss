@@ -1,0 +1,36 @@
+ 
+@media only screen and (max-width: 1200px) {
+    .inner{
+        width: 100% !important;
+    }
+    input,mat-form-field{
+      width: 100% !important;
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    .inner{
+        width: 100% !important;
+    }
+  }
+  
+  input{
+    height: 2em !important;
+  }
+  select{
+    justify-content: right !important;
+    justify-items: right !important;
+  }
+  .border-green{
+    border :solid 2px var(--COLOR-GREEN) !important
+  }
+  .icon-close{
+    position: absolute;
+    right: 1px;
+    top:1px;
+}
+.type-selected{
+  position: absolute !important;
+  left:0;
+  top:0;
+  background-color: white;
+}

@@ -1,0 +1,464 @@
+<pe-image-gallery
+  [imageGalleryData]="imgSrcToGallery"
+  (action)="action()"
+  [title]="
+    fetchFormInputValue('title') +
+    ' ' +
+    fetchFormInputValue('type') +
+    ' - ' +
+    fetchFormInputValue('city')
+  "
+></pe-image-gallery>
+
+<ng-container
+  *ngIf="
+    loadinProgressDoSharingLocation || !localInformation?.country;
+    else showLocationInformation
+  "
+>
+  <div class="w-100 loading-div position-relative p-1">
+    <div class="position-absolute d-inline loading">
+      <pe-loading-progress [mode]="'full'"></pe-loading-progress>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #showLocationInformation>
+  <div class="text-left w-100">
+    <div class="bg-white inner w-100">
+      <div class="p-2" *ngIf="!existLocation; else ExistsLocation">
+        <form
+          class="m-4"
+          [formGroup]="form"
+          (submit)="onSubmit()"
+          enctype="multipart/form-data"
+        >
+          <div class="row flex-nowrap">
+            <div>
+              <div class="flex-nowrap mb-4">
+                <div>
+                  <img
+                    class="rounded-circle img-country m-2 animated-scale"
+                    [src]="
+                      'https://cdn.countryflags.com/thumbs/' +
+                      lowercase(localInformation.country) +
+                      '/flag-square-250.png'
+                    "
+                  />
+                  <span class="text-blueblack fw-bolder">
+                    {{ localInformation.country | uppercase }} -
+                    {{ localInformation.city }}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>
+                    {{ 'county' | translate }}
+                  </mat-label>
+                  <input
+                    class="text-blueblack fw-bold"
+                    matInput
+                    [readonly]="existLocation"
+                    formControlName="county"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'district' | translate }} </mat-label>
+                  <input
+                    class="text-blueblack fw-bold"
+                    matInput
+                    [readonly]="existLocation"
+                    formControlName="district"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'street' | translate }}</mat-label>
+                  <input
+                    matInput
+                    class="text-blueblack fw-bold"
+                    [readonly]="existLocation"
+                    formControlName="street"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'placename' | translate }} </mat-label>
+                  <input
+                    matInput
+                    class="text-blueblack fw-bold"
+                    [readonly]="existLocation"
+                    formControlName="title"
+                    placeholder="Ex . google company"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'placetype' | translate }}</mat-label>
+                  <input
+                    class="text-blueblack fw-bold"
+                    matInput
+                    [readonly]="existLocation"
+                    formControlName="type"
+                    placeholder="Ex . google company"
+                  />
+                </mat-form-field>
+
+                <div
+                  *ngIf="
+                    locationTypeAutocompleteDataFiltered !== null &&
+                    locationTypeAutocompleteDataFiltered.length < 10
+                  "
+                  class="lists form"
+                >
+                  <div
+                    class="cursor-pointer w-100 bg-light p-1"
+                    *ngFor="
+                      let item of locationTypeAutocompleteDataFiltered;
+                      let i = index
+                    "
+                  >
+                    <div class="bg-light span-animated-on-hover cursor-pointer">
+                      <div class="row d-flex flex-nowrap">
+                        <div
+                          style="flex-basis: 45%"
+                          class="text-left text-capitalize fw-bold"
+                          (click)="changeLocatioType(item.type)"
+                          *ngIf="item.type !== 'null'"
+                        >
+                          {{ item.type }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'email' | translate }}</mat-label>
+                  <input
+                    matInput
+                    class="text-blueblack fw-bold"
+                    [readonly]="existLocation"
+                    formControlName="email"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'tell' | translate }}</mat-label>
+                  <input
+                    matInput
+                    class="text-blueblack fw-bold"
+                    [readonly]="existLocation"
+                    formControlName="phone"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> {{ 'website' | translate }}</mat-label>
+                  <input
+                    matInput
+                    class="text-blueblack fw-bold"
+                    [readonly]="existLocation"
+                    formControlName="web"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="w-100">
+            <mat-form-field class="w-100">
+              <mat-label> {{ 'shareexperience' | translate }} </mat-label>
+              <textarea
+                class="text-blueblack fw-bold"
+                matInput
+                formControlName="describe"
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <div class="w-100 text-left">
+            <span class="border p-2 cursor-pointer" (click)="openFile('file1')">
+              {{ 'uploadImages' | translate }}</span
+            >
+            <input
+              style="visibility: hidden"
+              (change)="onFileChange($event)"
+              class="input-file-upload"
+              type="file"
+              id="file1"
+              #file1
+              name="file1"
+              multiple="multiple"
+              formControlName="file"
+            />
+          </div>
+          <div class="w-100 text-center p-3 m-2">
+            <button
+              *ngIf="setting.userLogined; else mustLogin"
+              class="btn-master-orange"
+              mat-stroked-button
+              type="submit"
+              [disabled]="!form.valid"
+            >
+              {{ 'submit' | translate }}
+            </button>
+            <ng-template #mustLogin>
+              <button mat-stroked-button>
+                {{ 'mustLogin' | translate }} to submit location
+              </button>
+            </ng-template>
+          </div>
+        </form>
+      </div>
+
+      <ng-template #ExistsLocation>
+        <div class="p-1">
+          <div class="title-bar">
+            <div>
+              <span class="fw-bold text-blueblack text-title text-large">
+                {{ fetchFormInputValue('title') | titlecase }}&nbsp;
+              </span>
+              <span class="fw-bold text-blueblack text-title text-large">
+                {{ fetchFormInputValue('type') | titlecase }}
+              </span>
+            </div>
+            <div class="flex-cell w-100">
+              <div class="d-flex w-100">
+                <div style="flex-basis: 50%">
+                  <span class="sign p-1">
+                    <i
+                      [class.selected]="result.saved"
+                      class="cursor-pointer fa fa-2x fa-heart"
+                      (click)="saved()"
+                    >
+                    </i>
+                  </span>
+                  <span class="sign p-1">
+                    <i
+                      class="cursor-pointer fa fa-2x fa-share-alt"
+                      (click)="setting.userListShow = !setting.userListShow"
+                    >
+                    </i>
+                  </span>
+                </div>
+                <div style="flex-basis: 50%" class="text-right">
+                  <span
+                    *ngIf="!confirmDelete && ownerPermission"
+                    (click)="confirmDelete = !confirmDelete"
+                    class="p-2"
+                  >
+                    <button class="bg-light" mat-stroked-button>
+                      {{ 'deletePost' | translate }}
+                    </button>
+                  </span>
+                  <span
+                    *ngIf="confirmDelete && ownerPermission"
+                    (click)="confirmDelete = !confirmDelete"
+                    class="p-2"
+                  >
+                    <button class="bg-light" mat-stroked-button>
+                      {{ 'cancel' | translate }}
+                    </button>
+                  </span>
+                  <span
+                    *ngIf="confirmDelete && ownerPermission"
+                    (click)="deleteLocation()"
+                    class="p-2"
+                  >
+                    <button class="text-light bg-danger" mat-stroked-button>
+                      {{ 'confirmDeletePost' | translate }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="setting.userListShow">
+              <pe-autocomplete-public
+                (resultSelected)="resultSelect($event)"
+                [data]="usersList"
+              ></pe-autocomplete-public>
+            </div>
+          </div>
+          <div class="bg-white p-4">
+            <p>
+              <span class="text-muted"> Positive Score </span>
+              <span class="sign">
+                {{ extractRate(result.avgRate)[0] }}
+              </span>
+            </p>
+            <p>
+              <span class="text-muted"> Negative Score </span>
+              <span class="sign">
+                {{ extractRate(result.avgRate)[1] }}
+              </span>
+            </p>
+            <p>
+              <span class="text-muted"> {{ 'Address' | translate }} </span>
+
+              <span>
+                {{ fetchFormInputValue('district') }}
+              </span>
+              <span>
+                {{ fetchFormInputValue('street') }}
+              </span>
+              <span
+                *ngIf="fetchFormInputValue('city')"
+                class="text-blueblack text-blueblack"
+              >
+                , {{ fetchFormInputValue('city') }}
+              </span>
+              <span
+                *ngIf="fetchFormInputValue('country')"
+                class="text-blueblack text-blueblack"
+              >
+                , {{ fetchFormInputValue('country') }}
+              </span>
+            </p>
+
+            <p *ngIf="fetchFormInputValue('phone').length > 4">
+              <span class="text-muted"> {{ 'tell' | translate }} </span>
+
+              <span class="fw-bold">
+                {{ fetchFormInputValue('phone') }}
+              </span>
+            </p>
+            <p *ngIf="fetchFormInputValue('email').length > 4">
+              <span class="text-muted"> {{ 'email' | translate }} </span>
+              <span>
+                {{ fetchFormInputValue('email') }}
+              </span>
+            </p>
+            <p *ngIf="fetchFormInputValue('web').length > 4">
+              <span class="text-muted"> {{ 'website' | translate }} </span>
+
+              <span class="fst-italic">
+                <a
+                  [href]="fetchFormInputValue('web')"
+                  class="link"
+                  target="_blank"
+                >
+                  {{ fetchFormInputValue('web') }}</a
+                >
+              </span>
+            </p>
+            <p>
+              <span class="fst-italic text-muted">
+                GEO [{{ fetchFormInputValue('lat') }},
+                {{ fetchFormInputValue('lat') }}]
+              </span>
+            </p>
+            <p>
+              {{ fetchFormInputValue('describe') | titlecase }}
+            </p>
+            <div class="p-3 bg-light bg-white w-100">
+              <div class="row w-100 bg-white">
+                <div
+                  class="col-md-3"
+                  *ngFor="let img of imgSrc"
+                  (click)="openImage(img)"
+                >
+                  <img [src]="img" class="cursor-pointer img_icon m-1" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modals w-100" *ngIf="setting.showFormSubmit">
+            <div>
+              <div class="mt-4 w-100 bg-light bg-primary" *ngIf="existLocation">
+                <div class="title-bar">
+                  {{ 'peapleInterrested' | translate }}
+                </div>
+                <pe-experiences
+                  *ngIf="result?.id > 0"
+                  [locationId]="result.id"
+                ></pe-experiences>
+              </div>
+            </div>
+
+            <form
+              [formGroup]="form"
+              class="w-100 m-2 p-4"
+              (submit)="onSubmit()"
+              enctype="multipart/form-data"
+            >
+              <div class="w-100 text-left">
+                <div class="w-100">
+                  <mat-form-field class="w-100">
+                    <mat-label>
+                      {{ 'shareexperience' | translate }}
+                    </mat-label>
+                    <textarea matInput formControlName="describe"></textarea>
+                  </mat-form-field>
+                </div>
+                <div *ngIf="existLocation" class="w-100 text-left p-2">
+                  <span class="p-2">
+                    <i
+                      class="fa fa-thumbs-up cursor-pointer fa-2x"
+                      [class.selected-rate]="result.score === 1"
+                      (click)="rate(1)"
+                    ></i>
+                  </span>
+
+                  <span class="p-2">
+                    <i
+                      class="fa fa-thumbs-down cursor-pointer fa-2x"
+                      [class.selected-rate]="result.score === -1"
+                      (click)="rate(-1)"
+                    ></i>
+                  </span>
+
+                  <span *ngIf="setting.loadingSmall">
+                    <img
+                      src="../../../assets/img/loading.png"
+                      class="icon-small"
+                    />
+                  </span>
+                </div>
+                <div class="w-100 text-left" *ngIf="result?.id > 0">
+                  <span
+                    class="border p-2 cursor-pointer"
+                    (click)="openFile('file2')"
+                    >{{ 'uploadImages' | translate }}</span
+                  >
+                  <input
+                    style="visibility: hidden"
+                    (change)="onFileChange($event)"
+                    class="input-file-upload"
+                    type="file"
+                    id="file2"
+                    #file2
+                    name="file2"
+                    multiple="multiple"
+                    formControlName="file"
+                  />
+                </div>
+                <div class="w-100 text-left mt-4">
+                  <button
+                    class="btn-master-orange"
+                    mat-stroked-button
+                    type="submit"
+                  >
+                    {{ 'submit' | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>

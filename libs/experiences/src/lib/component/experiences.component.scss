@@ -1,0 +1,36 @@
+.top-right-absolute{
+    position: absolute;
+    right: 1em;
+    top: 1em;
+
+}
+
+
+.experience-row>div:first-child{
+    flex-basis: 5%;
+}
+.experience-row>div:last-child{
+    flex-basis: 95%;
+}
+.img-profile{
+    border-radius: 10%;
+    width: 6vh !important;
+    height: 5vh !important;
+    opacity: 0.8;
+}
+.img_icon{
+    border-radius: 5%;
+    width: 8.2vh !important;
+    height: 5vh !important;
+    opacity: 0.8;
+}
+.img_icon:hover{
+    opacity: 1;
+}
+
+.border-light{
+    border: solid 1px var(--COLOR-CREAM) !important;
+  }
+.pl-4{
+    padding-left: 1em !important;
+}

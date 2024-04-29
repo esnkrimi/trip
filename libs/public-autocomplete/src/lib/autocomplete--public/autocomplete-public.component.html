@@ -1,0 +1,34 @@
+<div class="position-static">
+  <form class="form">
+    <mat-form-field class="w-100">
+      <mat-label>User</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="inputUser"
+        placeholder="Ex. London"
+      />
+    </mat-form-field>
+  </form>
+  <ng-container *ngIf="loading; else suggest">
+    <pe-loading-progress [mode]="'mini'"></pe-loading-progress>
+  </ng-container>
+  <ng-template #suggest>
+    <div class="lists form">
+      <div
+        class="cursor-pointer bg-light p-1"
+        *ngFor="let item of result; let i = index"
+        (click)="resultSelect(item)"
+      >
+        <div class="bg-light span-animated-on-hover cursor-pointer">
+          <div>
+            <span class="fw-bold text-capitalize">
+              {{ item.name }} {{ item.lnama }}</span
+            >
+            <span class="fw-light"> {{ item.email }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

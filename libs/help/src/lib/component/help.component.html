@@ -1,0 +1,14 @@
+<div
+  class="frame text-large text-center"
+  (click)="text = ''"
+  *ngIf="text.length > 0"
+  cdkDrag
+>
+  <div
+    class="help-content inner border bg-danger text-light p-1 text-center w-100"
+  >
+    <span class="text-orange fw-bold text-meduim">
+      {{ arrayOfText }}
+    </span>
+  </div>
+</div>

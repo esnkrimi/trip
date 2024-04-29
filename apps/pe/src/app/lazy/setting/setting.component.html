@@ -1,0 +1,121 @@
+<div class="text-left w-100 bg-white">
+  <br />
+  <br />
+  <div class="inner w-100 bg-white">
+    <div class="row bg-white">
+      <div class="col-md-4 relative">
+        <img
+          class="w-100"
+          [src]="
+            'https://burjcrown.com/drm/travel/users/profile/' +
+            userId +
+            '/1.jpg?id=' +
+            timeStamp()
+          "
+        />
+        <div class="banner-bottom row flex-cell text-center">
+          <div class="text-left">
+            <span
+              class="border p-2 cursor-pointer"
+              (click)="openFile('file')"
+              >{{ 'uploadImages' | translate }}</span
+            >
+            <input
+              style="visibility: hidden"
+              (change)="onFileChange($event)"
+              class="input-file-upload"
+              type="file"
+              id="file"
+              #id
+              name="file"
+              formControlName="file"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 p-3">
+        <form
+          class="form w-50"
+          (ngSubmit)="updateInfo()"
+          [formGroup]="formSetting"
+        >
+          <div>
+            <mat-form-field class="w-100">
+              <mat-label class="text-capitalize">{{
+                'name' | translate
+              }}</mat-label>
+              <input matInput formControlName="name" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-100">
+              <mat-label class="text-capitalize">{{
+                'lastName' | translate
+              }}</mat-label>
+              <input matInput formControlName="lname" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-100">
+              <mat-label class="text-capitalize">{{
+                'email' | translate
+              }}</mat-label>
+              <input matInput formControlName="email" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-100">
+              <mat-label class="text-capitalize">{{
+                'password' | translate
+              }}</mat-label>
+              <input matInput type="password" formControlName="pass" />
+            </mat-form-field>
+          </div>
+          <div>
+            <button
+              mat-stroked-button
+              class="btn-master-orange"
+              type="submit"
+              [disabled]="!formSetting.valid"
+            >
+              {{ 'update' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="w-100">
+      <div class="title-bar text-medium text-left">
+        {{ 'aboutMe' | translate }}
+      </div>
+      <form [formGroup]="formAboutMe" (ngSubmit)="updateAboutme()">
+        <div class="p-1 text-left">
+          <textarea class="w-100" formControlName="aboutme"> </textarea>
+        </div>
+        <div>
+          <button
+            [disabled]="!formAboutMe.valid"
+            mat-stroked-button
+            class="C"
+            type="submit"
+          >
+            {{ 'update' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="w-100 bg-white">
+      <div class="title-bar text-left">{{ 'walletConnect' | translate }}</div>
+      <div class="row text-left">
+        <div style="flex-basis: 50%" class="p-2">
+          <button (click)="openDialog()" mat-stroked-button class="bg-light">
+            {{ 'connect' | translate }}
+          </button>
+        </div>
+        <div style="flex-basis: 50%">0x10w0c1er87vf0rfe45rv54e0f54re</div>
+      </div>
+    </div>
+  </div>
+</div>

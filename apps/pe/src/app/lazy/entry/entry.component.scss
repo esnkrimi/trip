@@ -1,0 +1,27 @@
+.inner{
+    display: inline-block;
+}
+.bg{
+ 
+}
+.text-left{
+    text-align: left;
+}
+
+.bg-success{
+ }
+.cards{
+    top:30%
+}
+
+button{
+    height: 3.5em !important;
+    border-radius: 3%;
+}
+
+@media (max-width:1200px) {
+    .login-div {
+      width: 100% !important;
+    }
+  
+  }
